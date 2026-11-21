@@ -6,6 +6,7 @@ loja = [
     [1,6,7]
 
 ]
+//isso é um teste, testando teste, blabla
 
 for i in range(len(loja)):
   print(loja[i])
