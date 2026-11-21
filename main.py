@@ -1,139 +1,116 @@
-loja = [
 
-    [3,5,7],
-    [6,7,9],
-    [9,5,4],
-    [1,6,7]
+from salvamento import salvar_estoque,Salvar_mod
 
-]
-//isso é um teste, testando teste, blabla
+#from funcao import tamanho
 
+
+tamanhos = ["P","M","G"]
+models = ["Modelo 1", "Modelo 2", "Modelo 3", "Modelo 4"]
+mod =0
+
+try:
+    with open("estoque.txt", "r", encoding="utf-8") as arquivo:
+        linhas = arquivo.readlines()
+
+        loja = []
+        for linha in linhas[0:5]:
+            numeros = linha.strip().split(";")
+            loja.append([int(numero) for numero in numeros])
+
+except FileNotFoundError:
+    print("\nArquivo não encontrado. Iniciando estoque padrão.\n")
+
+    loja = []
+
+    for i in range(4): # Roda o Modelo
+        modelo = []
+        for x in range(3): # Roda o Tamanho
+            quant = int(input(f"Quantidade do Modelo {i+1},Tamanho {tamanhos[x]}: "))
+            modelo.append(quant)
+        loja.append(modelo)
+
+    salvar_estoque(loja)
+  
+  
+    
+    
+def tamanho():
+    while True:
+        tamanho = input("Qual Tamanho(P/M/G):").upper()
+
+        if tamanho == "P":
+            return 0
+        elif tamanho == "M":
+            return 1
+        elif tamanho == "G":
+            return 2
+        else:
+            print("\n Tamanho Inválido!\n")
+            
+            
+            
+            
+            
+while True:
+
+    print("\n======= LoJa JoJa ========\n") #Exibe Estoque Ao voltar para o While
+    print("LoJa      P  M  G")
+    for i in range(4):
+        print(models[i], end =" ")
+        print(loja[i])
+
+    print("\n[1] - Adicionar\n[2] - Remover\n[3] - Ver Menores que 3\n[0] - Sair")
+    opc = int(input("Digite a Opção: "))
+
+    if(opc == 1):# Adicionar
+
+        tipo = int(input("\nTipo de camisa: "))
+        tam1 = tamanho()
+        adc = int(input("Quantidade a Adicionar: "))
+        
+        if adc <= 0:
+            print("\nValor invalido!\n")
+            continue
+
+        loja[tipo -1][tam1] += adc
+
+        mod += 1
+        salvar_estoque(loja)
+        Salvar_mod(loja,"ADIÇÃO",mod)
+
+    if(opc == 2): # Remoção
+
+        tipo = int(input("\nTipo de camisa: "))
+        tam2 = tamanho()
+        rmv = int(input("Quantidade a Remover: "))
+
+        if rmv <= 0:
+            print("\nQuantidade inválida!\n")
+            continue
+
+        if rmv > loja[tipo -1][tam2]:
+            print("\nQuantidade maior que estk!\n")
+            continue
+
+        loja[tipo -1][tam2] -= rmv
+        mod += 1
+        salvar_estoque(loja)
+        Salvar_mod(loja,"REMOÇÃO",mod)
+
+    if(opc == 3): # Contar < 3
+         for i in range(len(loja)): # 0 1 2 3
+              print()
+              for j in range(3) : # 012 012 012 012
+                valor = loja[i][j]
+
+                if loja[i][j] <= 3:
+                    print(f"Camisa Modelo {i+1}, Tamanho {tamanhos[j]}, Disponivel: {valor}")
+
+    if(opc == 0):
+        print("\nVolte Sempre!")
+        break
+
+print()
 for i in range(len(loja)):
   print(loja[i])
 
-def tipo(): # tipo
-    tipo = input("\nSelecione o Tipo(A/B/C/D): ").upper()
-    if(tipo == "A"):
-      tipo = 0
-    elif (tipo == "B"):
-      tipo = 1
-    elif(tipo == "C"):
-      tipo = 2
-    elif(tipo == "D"):
-      tipo = 3
-    else:
-      raise ValueError("\nTipo de Camisa inválido")
-
-    return tipo
-
-def tamanho(): # tamanho
-    tamanho = input("Escolha o Tamanho(P/M/G): ").upper()
-    if tamanho == "P":
-      tamanho = 0
-    elif(tamanho == "M"):
-        tamanho = 1
-    elif(tamanho == "G"):
-        tamanho = 2
-    else:
-      raise ValueError("Tamanho invalido!")
-
-    return tamanho
-
-def adicionar(tip, tam):  # adicionar
-  quantidade = int(input("\nQuantidade a Adicionar: "))
-
-  if quantidade <= 0:
-    raise ValueError("Quantidade inválida!")
-
-  loja[tip][tam] += quantidade
-
-  return loja[tip][tam]
-
-def remover(tip, tam): # remover
-  quantidade = (int(input("\nQuantidade a Remover: ")))
-
-  disponivel = loja[tip][tam]
-
-  if quantidade > disponivel:
-    raise ValueError("Quantidade maior que o estoque!")
-
-  if quantidade <= 0:
-    raise ValueError("Quantidade inválida!")
-
-  loja[tip][tam] -= quantidade
-
-  return loja[tip][tam]
-
-#interface
-while True:
-  print("\n===========  Gerencia. L O J A ============")
-  print("[1] - Consultar um Modelo")
-  print("[2] - Adicionar Estoque")
-  print("[3] - RemoveR Estoque")
-  print("[4] - Vizualizar Combinações com 3 ou menos")
-  print("[0] - Sair")
-
-  opc = int(input("Digite As Opções Acima: "))
-
-  if (opc == 1): # verificar modelo
-
-    tip = tipo()
-    tam = tamanho()
-    print(f'\nQuantidade Disponivel do Modelo: {loja[tip][tam]}')
-    print()
-
-  if(opc == 2): # adicionar
-
-    tip = tipo()
-    tam = tamanho()
-    adc = adicionar(tip,tam)
-    print(f'Novo Valor: {adc}')
-    print()
-
-    for i in range(len(loja)):
-      print(loja[i])
-
-  elif(opc == 3): # remover
-
-    tip = tipo()
-    tam = tamanho()
-    rmv = remover(tip,tam)
-    print(f'Novo Valor: {rmv}')
-    print()
-
-    for i in range(len(loja)):
-      print(loja[i])
-
-  elif(opc == 4): # exibe combinações com menos de 3
-
-    for i in range(len(loja)): # 0 1 2 3
-      print()
-      for j in range(3) : # 012 012 012 012
-        valor = loja[i][j]
-        if (valor <= 3):
-
-          if (j == 0):
-            j = "P"
-          elif (j == 1):
-            j = "M"
-          elif (j == 2):
-            j = "G"
-
-          if(i == 0):
-            print(f"Camisa Tipo A, Tamanho {j}, Disponivel: {valor}")
-          elif(i == 1):
-            print(f"Camisa Tipo B, Tamanho {j}, Disponivel: {valor}")
-          elif(i == 2):
-            print(f"Camisa Tipo C, Tamanho {j}, Disponivel: {valor}")
-          elif(i == 3):
-            print(f"Camisa Tipo D, Tamanho {j}, Disponivel: {valor}")
-
-  elif(opc == 0):
-    print("\nVolte Sempre!")
-    print("Estoque Final:")
-    for i in range(len(loja)):
-      print(loja[i])
-    break
-
-  else:
-    print("\nInválido, Tente novamente!")
