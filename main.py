@@ -1,11 +1,9 @@
 
 from salvamento import salvar_estoque,salvar_mod
-from funcoes import tamanho, modelos, adicionar, remover
-
+from funcoes import tamanho, modelos, adicionar, remover, estoque_baixo
 
 tamanhos = ["P","M","G"]
 models = ["Modelo 1", "Modelo 2", "Modelo 3", "Modelo 4"]
-mod = 0
 
 try:
      with open("estoque.txt", "r", encoding="utf-8") as arquivo:
@@ -32,7 +30,7 @@ except FileNotFoundError:
                  
 while True:
 
-    print("\n======= LoJa JoJa ========\n") #Exibe Estoque Ao voltar para o While
+    print("\nEsToQuE: ====================\n") #Exibe Estoque Ao voltar para o While
     print("LoJa      P  M  G")
     
     for i in range(4):
@@ -43,21 +41,20 @@ while True:
     opc = int(input("Digite a Opção: "))
 
     if(opc == 1):# Adicionar
-      pass
+      print("\nAdIcIoNaR: ====================\n")
+      adicionar(loja)
         
     elif(opc == 2): # Remoção
-      pass
+      print("\nReMoVeR: ====================\n")
+      remover(loja)
 
-    if(opc == 3):
-      
-         for i in range(len(loja)): # 0 1 2 3
-              print()
-              for j in range(3) : # 012 012 012 012
-                valor = loja[i][j]
+    elif(opc == 3):
+        print("\nEstoque Abaixo: ====================\n")
+        estoque_baixo(loja,tamanhos)
 
-                if loja[i][j] <= 3:
-                    print(f"Camisa Modelo {i+1}, Tamanho {tamanhos[j]}, Disponivel: {valor}")
-
-    if(opc == 0):
+    elif(opc == 0):
       print("\nVolte Sempre!")
       break
+    
+    else:
+      print("\nOpção Invalida!")
