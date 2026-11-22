@@ -13,9 +13,12 @@ def salvar_estoque(loja):
 
     return ("\nSalvo Com Sucesso!\n")
 
-def Salvar_mod(loja,msg,mod):
+
+
+def salvar_mod(loja,msg, mod):
+
     with open("modify.txt", "a", encoding="utf-8") as arquivo:
-        arquivo.write(f"\nModificação: {mod} - {msg} -\n")
+        arquivo.write(f"\n Modificação: {mod} - {msg} -\n")
         for linha in range(4):
             for coluna in range(3):
                 arquivo.write(f"{loja[linha][coluna]}")

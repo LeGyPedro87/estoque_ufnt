@@ -1,6 +1,6 @@
 
 from salvamento import salvar_estoque,salvar_mod
-
+mod = 0
 def tamanho():
     while True:
         
@@ -33,7 +33,7 @@ def modelos():
 
 
 def adicionar(loja):
-    
+    global mod
     while True:
         
         tipo = modelos()
@@ -45,11 +45,16 @@ def adicionar(loja):
             continue
 
         loja[tipo][tam] += adc  
+        
+        mod += 1 
         print("\nA operação foi concluida com Sucesso!")
+        salvar_estoque(loja)
+        salvar_mod(loja,"- Adição -",mod)
         break
-    
+        
 def remover(loja):
   
+    global mod
     while True:
         
         tipo = modelos()
@@ -65,46 +70,9 @@ def remover(loja):
             continue
 
         loja[tipo][tam] -= rmv
+        
+        mod += 1
         print("\nA operação foi concluida com Sucesso!")
+        salvar_estoque(loja)
+        salvar_mod(loja,"- Remoção -", mod)
         break
-  
-  
-  
-''''          
-def adicionar(loja,tipo,tam1,adc):
-  
-  while True:
-    
-    if adc <= 0:
-      print("\nValor invalido!\n")
-      continue
-
-    loja[tipo -1][tam1] += adc
-    
-    mod += 1
-    salvar_estoque(loja)
-    Salvar_mod(loja,"ADIÇÃO",mod)
-    break
-      
-def remover(loja,rmv,tipo,tam2):
-  
-  while True:
-    
-    if rmv <= 0:
-      print("\nQuantidade inválida!\n")
-      continue
-
-    if rmv > loja[tipo -1][tam2]:
-      ("\nQuantidade maior que estk!\n")
-      continue
-
-    loja[tipo -1][tam2] -= rmv
-    mod += 1
-    
-    salvar_estoque(loja)
-    Salvar_mod(loja,"REMOÇÃO",mod)
-    break
-'''
-    
-    
-
