@@ -1,6 +1,8 @@
 
 from salvamento import salvar_estoque,salvar_mod
+
 mod = 0
+
 def tamanho():
     while True:
         
@@ -33,6 +35,7 @@ def modelos():
 
 
 def adicionar(loja):
+  
     global mod
     while True:
         
@@ -76,3 +79,13 @@ def remover(loja):
         salvar_estoque(loja)
         salvar_mod(loja,"- Remoção -", mod)
         break
+
+def estoque_baixo(loja,tamanhos):
+        
+    for i in range(len(loja)): # 0 1 2 3
+      print()
+      for j in range(3) : # 012 012 012 012
+        valor = loja[i][j]
+
+        if loja[i][j] <= 3:
+          print(f"Camisa Modelo {i+1}, Tamanho {tamanhos[j]}, Disponivel: {valor}")

@@ -11,11 +11,11 @@ def salvar_estoque(loja):
 
             arquivo.write("\n")
 
-    return ("\nSalvo Com Sucesso!\n")
+    print("\nEstoque Salvo Com Sucesso!...")
 
 
 
-def salvar_mod(loja,msg, mod):
+def salvar_mod(loja,msg,mod):
 
     with open("modify.txt", "a", encoding="utf-8") as arquivo:
         arquivo.write(f"\n Modificação: {mod} - {msg} -\n")
@@ -27,4 +27,4 @@ def salvar_mod(loja,msg, mod):
                     arquivo.write(";")
 
             arquivo.write("\n")
-    return ("\n Modificação Salva!\n")
+    print("Modificação(log) Salva com Sucesso!...")
